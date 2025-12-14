@@ -3,7 +3,7 @@ import Note from "../models/Notes.js";
 
 export async function getAllNotes (req,res){
     try {
-         const  notes = await Note.find().sort({createdAt:-1});
+         const  notes = await Note.find()
          console.log('Sending Notes');
          res.status(200).json(notes)
         
@@ -18,6 +18,8 @@ export async function getAllNotes (req,res){
 export async function createNode(req,res){
     try{
         const {title,content} = req.body;
+        console.log(req)
+        console.log(req.body)
         const newNote = new Note({title,content});
         // const newNote = new Note(req.body); 
         console.log("Added Note");
@@ -28,7 +30,8 @@ export async function createNode(req,res){
     }
     catch(error){
         res.status(500).json({message:"Internal Server Error"})
-        console.error(error);
+        const {title,content} = req.body;
+        console.log(title,content)
     }
     
 }
@@ -52,7 +55,7 @@ export async function deleteNode(req,res){
         if (!deleteNote) return res.status(404).json({message:"Note not found"})
         res.status(200).json({message:"Note deleted"})
     } catch (error) {
-
+        console.log(error)
         res.status(500).json({message:"Internal Server Error"})
     }
 }

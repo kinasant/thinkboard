@@ -6,14 +6,14 @@ import { connectDB } from "./config/db.js";
 import rateLimiter from "./middleware/rateLimiter.js"
 // const express = require("express");
 import cors from "cors"
+
 dotenv.config();
 
 const app = express();
 connectDB();
+app.use(express.json())
 app.use(cors({origin:"http://localhost:5173"}))
-
-
-app.use(rateLimiter);
+app.use(rateLimiter)
 app.use("/api/notes",notesRoutes);
 
 
